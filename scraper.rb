@@ -49,7 +49,7 @@ def scrape_person(base, mpid)
       start_reason: tds[4].text.strip,
       source: url,
     }
-    if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:start_date].to_s != '1974-11-14'
+    if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:term][:id].to_s != '1'
       raise "Weird start date for #{data}" 
     end
     data
