@@ -40,6 +40,7 @@ def scrape_person(base, mpid)
     tds = row.css('td')
     data = { 
       id: mpid,
+      name: noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
       constituency: tds[2].text.strip,
       party: tds[3].text.strip,
       party_id: tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/,''),
@@ -49,7 +50,6 @@ def scrape_person(base, mpid)
       source: url,
     }
     if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:start_date].to_s != '1974-11-14'
-      binding.pry
       raise "Weird start date for #{data}" 
     end
     data
@@ -66,7 +66,7 @@ def scrape_person(base, mpid)
   mems.each do |mem|
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
-    puts "#{mem}".yellow
+    puts mem
     ScraperWiki.save_sqlite([:id, :term], mem)
   end
 end
@@ -89,7 +89,6 @@ def term_from(text)
     start_date: date_from(data[2]).to_s,
     end_date: date_from(data[3]).to_s,
   }
-  puts "#{@TERMS[id]}".green
   ScraperWiki.save_sqlite([:id], @TERMS[id], 'terms')
   return @TERMS[id]
 end
