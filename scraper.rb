@@ -51,7 +51,7 @@ def scrape_person(base, mpid)
       source: url,
     }
     if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:term][:id].to_s != '1'
-      raise "Weird start date for #{data}" 
+      warn "Weird start date for #{data}" 
     end
     data
   end
