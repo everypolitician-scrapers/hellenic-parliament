@@ -26,7 +26,8 @@ end
 
 def scrape_list(url)
   noko = noko_for(url)
-  noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option/@value').map(&:text).each do |mpid|
+  noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option/@value').map(&:text).each_with_index do |mpid, i|
+    puts i if (i % 50).zero?
     scrape_person(url, mpid) unless mpid.empty?
   end
 end
@@ -66,7 +67,7 @@ def scrape_person(base, mpid)
   mems.each do |mem|
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
-    puts mem
+    # puts mem
     ScraperWiki.save_sqlite([:id, :term], mem)
   end
 end
