@@ -35,7 +35,6 @@ end
 def scrape_person(base, mpid)
   url = "#{base}?MpId=#{mpid}"
   noko = noko_for(url)
-  noko_el = noko_for(url.sub('/en/', '/el/'))
 
   grid = noko.css('table.grid')
   mems = grid.xpath('.//tr[td]').reject { |r| r.attr('class') == 'tablefooter' }.map do |row|
@@ -43,7 +42,7 @@ def scrape_person(base, mpid)
     data = { 
       id: mpid,
       name: noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
-      name_el: noko_el.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
+      name_el: @gr_names[ mpid ],
       constituency: tds[2].text.strip,
       party: tds[3].text.strip,
       party_id: tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/,''),
@@ -69,7 +68,7 @@ def scrape_person(base, mpid)
   mems.each do |mem|
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
-    # puts mem
+    # puts mem
     ScraperWiki.save_sqlite([:id, :term], mem)
   end
 end
@@ -95,5 +94,8 @@ def term_from(text)
   ScraperWiki.save_sqlite([:id], @TERMS[id], 'terms')
   return @TERMS[id]
 end
+
+grn = noko_for('http://www.hellenicparliament.gr/el/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
+@gr_names = Hash[ grn.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option').map { |o| [o.attr('value'), o.text] } ]
 
 scrape_list('http://www.hellenicparliament.gr/en/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
