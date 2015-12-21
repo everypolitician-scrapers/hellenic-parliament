@@ -35,6 +35,7 @@ end
 def scrape_person(base, mpid)
   url = "#{base}?MpId=#{mpid}"
   noko = noko_for(url)
+  noko_el = noko_for(url.sub('/en/', '/el/'))
 
   grid = noko.css('table.grid')
   mems = grid.xpath('.//tr[td]').reject { |r| r.attr('class') == 'tablefooter' }.map do |row|
@@ -42,6 +43,7 @@ def scrape_person(base, mpid)
     data = { 
       id: mpid,
       name: noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
+      name_el: noko_el.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
       constituency: tds[2].text.strip,
       party: tds[3].text.strip,
       party_id: tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/,''),
