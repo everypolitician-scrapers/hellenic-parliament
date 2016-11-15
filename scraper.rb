@@ -16,7 +16,7 @@ OpenURI::Cache.cache_path = '.cache'
 @TERMS = []
 
 def noko_for(url)
-  Nokogiri::HTML(open(url).read) 
+  Nokogiri::HTML(open(url).read)
 end
 
 def date_from(str)
@@ -39,27 +39,27 @@ def scrape_person(base, mpid)
   grid = noko.css('table.grid')
   mems = grid.xpath('.//tr[td]').reject { |r| r.attr('class') == 'tablefooter' }.map do |row|
     tds = row.css('td')
-    data = { 
-      id: mpid,
-      name: noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/,' ').strip,
-      name_el: @gr_names[ mpid ],
+    data = {
+      id:           mpid,
+      name:         noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/, ' ').strip,
+      name_el:      @gr_names[mpid],
       constituency: tds[2].text.strip,
-      party: tds[3].text.strip,
-      party_id: tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/,''),
-      term: term_from(tds[0].text.strip),
-      start_date: date_from(tds[1].text.strip),
+      party:        tds[3].text.strip,
+      party_id:     tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/, ''),
+      term:         term_from(tds[0].text.strip),
+      start_date:   date_from(tds[1].text.strip),
       start_reason: tds[4].text.strip,
-      source: url,
+      source:       url,
     }
     if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:term][:id].to_s != '1'
-      warn "Weird start date for #{data}" 
+      warn "Weird start date for #{data}"
     end
     data
   end
-  
+
   if mems.size > 1
     mems.sort_by { |m| m[:start_date] }[0...-1].each_with_index do |mem, i|
-      nextmem = mems[i+1] 
+      nextmem = mems[i + 1]
       mem[:term][:id] == nextmem[:term][:id] or next
       mem[:end_date] = (nextmem[:start_date] - 1).to_s
     end
@@ -69,7 +69,7 @@ def scrape_person(base, mpid)
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
     # puts mem
-    ScraperWiki.save_sqlite([:id, :term], mem)
+    ScraperWiki.save_sqlite(%i(id term), mem)
   end
 end
 
@@ -77,8 +77,8 @@ def term_from(text)
   match = text.strip.match(%r{
     (\d+)([snrt][tdh])
     \s*
-    \(  
-      (\d{2}\/\d{2}\/\d{4}) 
+    \(
+      (\d{2}\/\d{2}\/\d{4})
       \s*-\s*
       (\d{2}\/\d{2}\/\d{4})?
     \s*\)}x) or raise "No match for #{text}"
@@ -86,16 +86,16 @@ def term_from(text)
   id = data[0].to_i
   return @TERMS[id] if @TERMS[id]
   @TERMS[id] = {
-    id: data[0],
-    name: "#{data[0]}#{data[1]} Hellenic Parliament",
+    id:         data[0],
+    name:       "#{data[0]}#{data[1]} Hellenic Parliament",
     start_date: date_from(data[2]).to_s,
-    end_date: date_from(data[3]).to_s,
+    end_date:   date_from(data[3]).to_s,
   }
   ScraperWiki.save_sqlite([:id], @TERMS[id], 'terms')
-  return @TERMS[id]
+  @TERMS[id]
 end
 
 grn = noko_for('http://www.hellenicparliament.gr/el/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
-@gr_names = Hash[ grn.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option').map { |o| [o.attr('value'), o.text] } ]
+@gr_names = Hash[grn.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option').map { |o| [o.attr('value'), o.text] }]
 
 scrape_list('http://www.hellenicparliament.gr/en/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
