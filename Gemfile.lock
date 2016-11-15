@@ -12,8 +12,6 @@ GEM
   specs:
     coderay (1.1.0)
     colorize (0.7.7)
-    execjs (2.5.2)
-    fuzzy_match (2.1.0)
     httpclient (2.6.0.1)
     method_source (0.8.2)
     mini_portile (0.6.2)
@@ -34,9 +32,13 @@ PLATFORMS
 
 DEPENDENCIES
   colorize
-  execjs
-  fuzzy_match
   nokogiri
   open-uri-cached
   pry
   scraperwiki!
+
+RUBY VERSION
+   ruby 2.0.0p648
+
+BUNDLED WITH
+   1.13.3
