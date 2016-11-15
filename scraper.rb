@@ -51,6 +51,9 @@ def scrape_person(base, mpid)
       start_reason: tds[4].text.strip,
       source:       url,
     }
+    data[:party_id] = 'ΟΟΕΟ' if data[:party] == 'ΟΟ.ΕΟ.'
+    raise "No Party ID for #{data[:party]}" if data[:party_id].to_s.empty?
+
     if data[:start_reason] =~ /Election/ and data[:start_date].to_s != data[:term][:start_date] and data[:term][:id].to_s != '1'
       warn "Weird start date for #{data}"
     end
