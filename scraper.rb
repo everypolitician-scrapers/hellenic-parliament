@@ -2,13 +2,10 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'scraperwiki'
-require 'nokogiri'
-require 'open-uri'
-require 'cgi'
-require 'json'
 require 'date'
 require 'pry'
+require 'scraped'
+require 'scraperwiki'
 
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
@@ -41,14 +38,14 @@ def scrape_person(base, mpid)
     tds = row.css('td')
     data = {
       id:           mpid,
-      name:         noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/, ' ').strip,
+      name:         noko.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option[@selected]').text.gsub(/[[:space:]]+/, ' ').tidy,
       name_el:      @gr_names[mpid],
-      constituency: tds[2].text.strip,
-      party:        tds[3].text.strip,
-      party_id:     tds[3].text.strip.split('(').first.strip.downcase.gsub(/\W/, ''),
-      term:         term_from(tds[0].text.strip),
-      start_date:   date_from(tds[1].text.strip),
-      start_reason: tds[4].text.strip,
+      constituency: tds[2].text.tidy,
+      party:        tds[3].text.tidy,
+      party_id:     tds[3].text.tidy.split('(').first.tidy.downcase.gsub(/\W/, ''),
+      term:         term_from(tds[0].text.tidy),
+      start_date:   date_from(tds[1].text.tidy),
+      start_reason: tds[4].text.tidy,
       source:       url,
     }
     data[:party_id] = 'ΟΟΕΟ' if data[:party] == 'ΟΟ.ΕΟ.'
@@ -77,7 +74,7 @@ def scrape_person(base, mpid)
 end
 
 def term_from(text)
-  match = text.strip.match(%r{
+  match = text.tidy.match(%r{
     (\d+)([snrt][tdh])
     \s*
     \(
