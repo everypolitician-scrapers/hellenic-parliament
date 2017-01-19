@@ -18,7 +18,7 @@ def noko_for(url)
 end
 
 def date_from(str)
-  return if str.to_s.empty?
+  return '' if str.to_s.empty?
   Date.parse(str)
 end
 
@@ -69,9 +69,10 @@ def scrape_person(base, mpid)
   mems.each do |mem|
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
-    # puts mem
-    ScraperWiki.save_sqlite(%i(id term), mem)
   end
+  # puts mems
+
+  ScraperWiki.save_sqlite(%i(id term party start_date), mems)
 end
 
 def term_from(text)
