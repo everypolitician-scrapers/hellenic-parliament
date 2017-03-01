@@ -18,7 +18,7 @@ response:
     message: OK
   headers:
     Date:
-    - Tue, 28 Feb 2017 01:44:00 GMT
+    - Wed, 01 Mar 2017 01:31:03 GMT
     Server:
     - Microsoft-IIS/7.0
     Cache-Control:
@@ -26,15 +26,15 @@ response:
     Content-Type:
     - text/html; charset=utf-8
     Expires:
-    - Mon, 27 Feb 2017 01:43:59 GMT
+    - Tue, 28 Feb 2017 01:31:01 GMT
     X-Aspnet-Version:
     - 2.0.50727
     X-Powered-By:
     - ASP.NET
     - eMentor Portal Server
     Content-Length:
-    - '246222'
+    - '246093'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Tue, 28 Feb 2017 01:44:01 GMT
+recorded_at: Wed, 01 Mar 2017 01:31:04 GMT
