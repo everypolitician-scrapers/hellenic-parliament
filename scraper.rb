@@ -100,5 +100,5 @@ end
 grn = noko_for('http://www.hellenicparliament.gr/el/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
 @gr_names = Hash[grn.css('#ctl00_ContentPlaceHolder1_dmps_mpsListId option').map { |o| [o.attr('value'), o.text] }]
 
-ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 scrape_list('http://www.hellenicparliament.gr/en/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/')
