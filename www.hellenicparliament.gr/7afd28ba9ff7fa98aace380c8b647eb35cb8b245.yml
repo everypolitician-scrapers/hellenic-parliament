@@ -1,0 +1,40 @@
+---
+request:
+  method: get
+  uri: http://www.hellenicparliament.gr/en/Vouleftes/Diatelesantes-Vouleftes-Apo-Ti-Metapolitefsi-Os-Simera/?MpId=8b7b0a91-8133-431d-9e88-a434014e9fc8
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Date:
+    - Fri, 21 Apr 2017 09:20:39 GMT
+    Server:
+    - Microsoft-IIS/7.0
+    Cache-Control:
+    - private
+    Content-Type:
+    - text/html; charset=utf-8
+    Expires:
+    - Thu, 20 Apr 2017 09:20:38 GMT
+    X-Aspnet-Version:
+    - 2.0.50727
+    X-Powered-By:
+    - ASP.NET
+    - eMentor Portal Server
+    Content-Length:
+    - '187338'
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 21 Apr 2017 09:20:42 GMT
