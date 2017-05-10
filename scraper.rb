@@ -72,7 +72,7 @@ def scrape_person(base, mpid)
   end
   # puts mems
 
-  ScraperWiki.save_sqlite(%i(id term party start_date), mems)
+  ScraperWiki.save_sqlite(%i[id term party start_date], mems)
 end
 
 def term_from(text)
