@@ -18,7 +18,7 @@ response:
     message: OK
   headers:
     Date:
-    - Wed, 18 Oct 2017 22:44:51 GMT
+    - Thu, 19 Oct 2017 13:04:02 GMT
     Server:
     - Microsoft-IIS/7.0
     Cache-Control:
@@ -26,7 +26,7 @@ response:
     Content-Type:
     - text/html; charset=utf-8
     Expires:
-    - Tue, 17 Oct 2017 22:44:50 GMT
+    - Wed, 18 Oct 2017 13:04:02 GMT
     X-Aspnet-Version:
     - 2.0.50727
     X-Powered-By:
@@ -37,4 +37,4 @@ response:
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Wed, 18 Oct 2017 22:44:52 GMT
+recorded_at: Thu, 19 Oct 2017 13:04:03 GMT
