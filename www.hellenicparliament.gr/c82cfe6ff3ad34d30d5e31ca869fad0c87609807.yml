@@ -18,7 +18,7 @@ response:
     message: OK
   headers:
     Date:
-    - Fri, 21 Apr 2017 09:40:47 GMT
+    - Mon, 02 Apr 2018 13:35:58 GMT
     Server:
     - Microsoft-IIS/7.0
     Cache-Control:
@@ -26,15 +26,23 @@ response:
     Content-Type:
     - text/html; charset=utf-8
     Expires:
-    - Thu, 20 Apr 2017 09:40:47 GMT
+    - Sun, 01 Apr 2018 13:35:57 GMT
     X-Aspnet-Version:
     - 2.0.50727
     X-Powered-By:
     - ASP.NET
     - eMentor Portal Server
+    X-Frame-Options:
+    - SAMEORIGIN
+    X-Xss-Protection:
+    - 1; mode=block
+    Strict-Transport-Security:
+    - max-age=31536000; includeSubDomains
+    X-Content-Type-Options:
+    - nosniff
     Content-Length:
-    - '186879'
+    - '187274'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Fri, 21 Apr 2017 09:40:50 GMT
+recorded_at: Mon, 02 Apr 2018 13:36:01 GMT
