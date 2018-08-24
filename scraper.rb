@@ -70,7 +70,7 @@ def scrape_person(base, mpid)
     mem[:start_date] = mem[:start_date].to_s
     mem[:term] = mem[:term][:id]
   end
-  # puts mems
+  mems.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
 
   ScraperWiki.save_sqlite(%i[id term party start_date], mems)
 end
